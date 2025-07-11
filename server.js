@@ -17,7 +17,7 @@ const myChain = new Blockchain();
 const p2pServer = new P2PServer(myChain);
 p2pServer.listen();
 
-// 🔄 Load blockchain from disk
+// ✅ Load blockchain from file
 if (fs.existsSync(DB_FILE)) {
     const saved = fs.readFileSync(DB_FILE);
     myChain.chain = JSON.parse(saved);
@@ -26,12 +26,12 @@ if (fs.existsSync(DB_FILE)) {
     console.log("📦 New blockchain created");
 }
 
-// 🔗 List all blocks
+// 🔗 GET /blocks — full chain
 app.get('/blocks', (req, res) => {
     res.json(myChain.chain);
 });
 
-// 📬 Get all posts from blockchain
+// 📰 GET /posts — filter only messages
 app.get('/posts', (req, res) => {
     const posts = myChain.chain
         .filter(block => block.data && block.data.message)
@@ -44,29 +44,14 @@ app.get('/posts', (req, res) => {
     res.json(posts);
 });
 
-// 🧱 Create new post (used by frontend)
+// 📝 POST /newPost — called by Lovable frontend
 app.post('/newPost', (req, res) => {
-    const { message, signature, from } = req.body;
+    const { message } = req.body;
 
-    if (!message || !signature || !from) {
-        return res.status(400).json({ error: "Missing message, signature, or from" });
+    if (!message || typeof message !== 'string') {
+        return res.status(400).json({ error: "Message is required" });
     }
 
-    const newIndex = myChain.chain.length;
-    const newBlock = new Block(newIndex, Date.now().toString(), { message, from, signature });
-
-    myChain.addBlock(newBlock);
-    credit(from, 10); // reward POS
-    fs.writeFileSync(DB_FILE, JSON.stringify(myChain.chain, null, 2));
-    p2pServer.broadcastBlock(newBlock);
-
-    console.log(`📝 New post added and mined: #${newBlock.index} - ${message}`);
-    res.json(newBlock);
-});
-
-// ⛏️ Optional: raw mine endpoint
-app.post('/mine', (req, res) => {
-    const message = req.body.message || 'No message';
     const signature = sign(message);
     const from = getPublicKey();
 
@@ -78,18 +63,23 @@ app.post('/mine', (req, res) => {
     fs.writeFileSync(DB_FILE, JSON.stringify(myChain.chain, null, 2));
     p2pServer.broadcastBlock(newBlock);
 
-    console.log(`⛏️  Mined: #${newBlock.index}`);
-    res.json(newBlock);
+    console.log(`✅ New post: #${newBlock.index} from ${from}`);
+    res.status(201).json({
+        message: newBlock.data.message,
+        from: newBlock.data.from,
+        timestamp: newBlock.timestamp,
+        hash: newBlock.hash
+    });
 });
 
-// 💰 Get balance by public key
+// 📊 GET /balance/:pubKey — return balance
 app.get('/balance/:pubKey', (req, res) => {
     const pubKey = req.params.pubKey;
     const balance = getBalance(pubKey);
     res.json({ balance: balance.toString() });
 });
 
-// 🚀 Start server
+// 🚀 Start HTTP server
 app.listen(HTTP_PORT, () => {
     console.log(`🚀 Server running at http://localhost:${HTTP_PORT}`);
 });
