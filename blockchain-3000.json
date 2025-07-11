@@ -1,0 +1,96 @@
+[
+  {
+    "index": 0,
+    "timestamp": "1725000000000",
+    "data": "Genesis Block",
+    "previousHash": "0",
+    "hash": "492fbf4ba6a9408cf718aa221994603ee1b1e6cf7aa2e93639a5a2b8af52ffba"
+  },
+  {
+    "index": 1,
+    "timestamp": "1752186967097",
+    "data": {
+      "message": "First post from node 1"
+    },
+    "previousHash": "492fbf4ba6a9408cf718aa221994603ee1b1e6cf7aa2e93639a5a2b8af52ffba",
+    "hash": "037d29991321f1d80e89d7e9fe943868986208191760ec6f8aa168aff966c87a"
+  },
+  {
+    "index": 2,
+    "timestamp": "1752190180967",
+    "data": {
+      "message": "✅ Block from Node 2"
+    },
+    "previousHash": "037d29991321f1d80e89d7e9fe943868986208191760ec6f8aa168aff966c87a",
+    "hash": "970c1b84becfa57a2c128b6b567fc5b956213a496d506bf29468032c0282d0ae"
+  },
+  {
+    "index": 3,
+    "timestamp": "1752191028960",
+    "data": {
+      "message": "🛠️ Test after fix"
+    },
+    "previousHash": "970c1b84becfa57a2c128b6b567fc5b956213a496d506bf29468032c0282d0ae",
+    "hash": "6ff089042001d16eaeaf1932d1abe65edf7533ba98ae763b922d5e7b0d60ec5b"
+  },
+  {
+    "index": 4,
+    "timestamp": "1752191215411",
+    "data": {
+      "message": "🔥 Block from Node 1"
+    },
+    "previousHash": "6ff089042001d16eaeaf1932d1abe65edf7533ba98ae763b922d5e7b0d60ec5b",
+    "hash": "f5d4b7ba260a6dbef84dedceae11577cd69ba7ee428d00432429bf0a1e075fd5"
+  },
+  {
+    "index": 5,
+    "timestamp": "1752193309837",
+    "data": {
+      "message": "🔥 Block from Node 1"
+    },
+    "previousHash": "f5d4b7ba260a6dbef84dedceae11577cd69ba7ee428d00432429bf0a1e075fd5",
+    "hash": "2f7c7776e32a3db30c797d597abb603eaf544a073ffa2738fb97b60cf4b91f65"
+  },
+  {
+    "index": 6,
+    "timestamp": "1752193367433",
+    "data": {
+      "message": "✅ Block from Node 2"
+    },
+    "previousHash": "2f7c7776e32a3db30c797d597abb603eaf544a073ffa2738fb97b60cf4b91f65",
+    "hash": "0b0351014fcc6081ad7ee6bb5ef4214a1fc341632d540b31803a6f61299c260b"
+  },
+  {
+    "index": 7,
+    "timestamp": "1752226190410",
+    "data": {
+      "message": "🔥 Hello from signed wallet",
+      "from": "-----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEAshHjwQCjXhUQz5fWdrioRwuwkF1EojJ9pIWKTP8w3qnOHG6JHB4p\n87+LqbwCryyPB4h7lbrQosbO2//R3aqjPp29mtzbjRNRrbFRl++skJ41oOHK4TEc\ni2NdXDCaXJ4cvEWX2KmJH2QByuNuVue2pxyYDze6rNRDjPE4qG5g89f1i0uoFsv+\nvavMiaffhIe+uVfmEHzJt73+NAdFrkvAbTDny9NhP7kNrEt9gqsMJte4DDHPhmvk\n83V/+RDeplwaKdjeOC8uvxAFhogOykQc3rsA/HAl3Hj/ZG3k4ooREv+pUYNLOXvJ\nYwBKrkvT07BE8pylKmjnmcjQUqKKw9ERRwIDAQAB\n-----END RSA PUBLIC KEY-----\n",
+      "signature": "3129d5dde81620dd1578155aba2e5d1147e6eed86a50365034f9063087d8558dcb2a94d0f6eba1ba72e432144b207c76932320017867c52de232b5befca2846fea1f4214cf5e88b9b6becf1b1031a390945929671cd2e96484f618e5fe87e0c2e639a7cdd4d17a23e1ec88879f25b84024047ce00edcbee882194ebac47dbcea198070b45a31f27c930c9668204072b19ebb4d8455aceded6b978fa62e6f03b7e0c5717af3186ffca70b4741b2462bb8ec383e6d3be83d1f2921b70933ac6c69889b05cce74b9482c1bbfeed3f9524c594fd06c5f5aed7e43079d2f0bbe5cf50c2242e588fafb2e43d22f866bc4215b6acbe494a2f0d9a28eba8d66723d08726"
+    },
+    "previousHash": "0b0351014fcc6081ad7ee6bb5ef4214a1fc341632d540b31803a6f61299c260b",
+    "hash": "ca980be5ac8fe35e232b3e90a02614ba11d8137d60720fed49375e7295b7ee52"
+  },
+  {
+    "index": 8,
+    "timestamp": "1752231683711",
+    "data": {
+      "message": "Hello Postchain!",
+      "from": "-----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEAshHjwQCjXhUQz5fWdrioRwuwkF1EojJ9pIWKTP8w3qnOHG6JHB4p\n87+LqbwCryyPB4h7lbrQosbO2//R3aqjPp29mtzbjRNRrbFRl++skJ41oOHK4TEc\ni2NdXDCaXJ4cvEWX2KmJH2QByuNuVue2pxyYDze6rNRDjPE4qG5g89f1i0uoFsv+\nvavMiaffhIe+uVfmEHzJt73+NAdFrkvAbTDny9NhP7kNrEt9gqsMJte4DDHPhmvk\n83V/+RDeplwaKdjeOC8uvxAFhogOykQc3rsA/HAl3Hj/ZG3k4ooREv+pUYNLOXvJ\nYwBKrkvT07BE8pylKmjnmcjQUqKKw9ERRwIDAQAB\n-----END RSA PUBLIC KEY-----\n",
+      "signature": "5c013739508cc64ed6a3114bdc4207e21b3eab5beb37544a9ac22a53ebab155053b536631074f73e394b50bc5a2a8c3d517e71e24e61f651b00a4570a8a205496edd0f28f7aaf0042c7501728efaa14d193967b9c92474e963a6fcbcd5465d7189d9915acc6614275b0046bc6bfd6ab723d821fd94aef85d11e894e9da5fd01e32e2e96f89d956cb20f405ae50fab77ba043a4182cb52c7266a6af697df49bb6175d141266fb8696f18b34905ec5cdb82542d24b2de8d8db9bc296155bcc0b99b9b1a15df93870f70027c7e9cd987839b331c6fd08087a6f24ab7bb33555da19f9cccd971533a83b6ac89ebd728cb7a74417c78d069f8f9f48adc9775c183173"
+    },
+    "previousHash": "ca980be5ac8fe35e232b3e90a02614ba11d8137d60720fed49375e7295b7ee52",
+    "hash": "e050f1bdab831bbe757a8e3ee8d9a0349588b863d0349a5fa681778a7f0464b5"
+  },
+  {
+    "index": 9,
+    "timestamp": "1752232798816",
+    "data": {
+      "message": "Reward me",
+      "from": "-----BEGIN RSA PUBLIC KEY-----\nMIIBCgKCAQEAshHjwQCjXhUQz5fWdrioRwuwkF1EojJ9pIWKTP8w3qnOHG6JHB4p\n87+LqbwCryyPB4h7lbrQosbO2//R3aqjPp29mtzbjRNRrbFRl++skJ41oOHK4TEc\ni2NdXDCaXJ4cvEWX2KmJH2QByuNuVue2pxyYDze6rNRDjPE4qG5g89f1i0uoFsv+\nvavMiaffhIe+uVfmEHzJt73+NAdFrkvAbTDny9NhP7kNrEt9gqsMJte4DDHPhmvk\n83V/+RDeplwaKdjeOC8uvxAFhogOykQc3rsA/HAl3Hj/ZG3k4ooREv+pUYNLOXvJ\nYwBKrkvT07BE8pylKmjnmcjQUqKKw9ERRwIDAQAB\n-----END RSA PUBLIC KEY-----\n",
+      "signature": "4c529ba0ddd4555a862be8021a033b936e35580acbd908471a119335e36edd30f34c24d5768f6be9e041cf719cf91d7665ab77f420de084c3c50e4542003f39a27acb29847b62fde2a3c41d3c2105ee74e908ff2d362ea2efbe838bebd5c29101bc8dcb995f4a542d2ce215e02c06b0dd83e2b755ef86d315d09acd804a025a86c81989008bc3d4f1477d9fddbe772535256189f2e23ea49e51fa6d6134b6a66816e09d4fcc0ed43e85403f6a56fc00e9a0d8dceb554545840834429e94bc259090209bfcd9abe29e42058394b8388b9907fccaf6148412f4bce18c428666414db95cdf6682b9d7ea83c8f8c56481dc4bb9bfd05c0f8a38e96f08ad3c3b7cce4"
+    },
+    "previousHash": "e050f1bdab831bbe757a8e3ee8d9a0349588b863d0349a5fa681778a7f0464b5",
+    "hash": "80f0e0be8e5f9a312457bed95cb254be9db955864a0b4a52ee924d3ef0c19a57"
+  }
+]

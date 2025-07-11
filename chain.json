@@ -1,0 +1,18 @@
+[
+  {
+    "index": 0,
+    "timestamp": "1752178716778",
+    "data": "Genesis Block",
+    "previousHash": "0",
+    "hash": "d541d58da789ff4b40f5e8ac79f2adbd8579ab55ace9836e9248055eb5a08a66"
+  },
+  {
+    "index": 1,
+    "timestamp": "1752178894882",
+    "data": {
+      "message": "This should be saved"
+    },
+    "previousHash": "d541d58da789ff4b40f5e8ac79f2adbd8579ab55ace9836e9248055eb5a08a66",
+    "hash": "06d526b8603b2e001c6a3ecd4d3e5d50577158a7011b9ecd6d18243254852833"
+  }
+]

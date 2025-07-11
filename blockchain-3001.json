@@ -1,0 +1,63 @@
+[
+  {
+    "index": 0,
+    "timestamp": "1725000000000",
+    "data": "Genesis Block",
+    "previousHash": "0",
+    "hash": "492fbf4ba6a9408cf718aa221994603ee1b1e6cf7aa2e93639a5a2b8af52ffba"
+  },
+  {
+    "index": 1,
+    "timestamp": "1752186967097",
+    "data": {
+      "message": "First post from node 1"
+    },
+    "previousHash": "492fbf4ba6a9408cf718aa221994603ee1b1e6cf7aa2e93639a5a2b8af52ffba",
+    "hash": "037d29991321f1d80e89d7e9fe943868986208191760ec6f8aa168aff966c87a"
+  },
+  {
+    "index": 2,
+    "timestamp": "1752190180967",
+    "data": {
+      "message": "✅ Block from Node 2"
+    },
+    "previousHash": "037d29991321f1d80e89d7e9fe943868986208191760ec6f8aa168aff966c87a",
+    "hash": "970c1b84becfa57a2c128b6b567fc5b956213a496d506bf29468032c0282d0ae"
+  },
+  {
+    "index": 3,
+    "timestamp": "1752191028960",
+    "data": {
+      "message": "🛠️ Test after fix"
+    },
+    "previousHash": "970c1b84becfa57a2c128b6b567fc5b956213a496d506bf29468032c0282d0ae",
+    "hash": "6ff089042001d16eaeaf1932d1abe65edf7533ba98ae763b922d5e7b0d60ec5b"
+  },
+  {
+    "index": 4,
+    "timestamp": "1752191215411",
+    "data": {
+      "message": "🔥 Block from Node 1"
+    },
+    "previousHash": "6ff089042001d16eaeaf1932d1abe65edf7533ba98ae763b922d5e7b0d60ec5b",
+    "hash": "f5d4b7ba260a6dbef84dedceae11577cd69ba7ee428d00432429bf0a1e075fd5"
+  },
+  {
+    "index": 5,
+    "timestamp": "1752193309837",
+    "data": {
+      "message": "🔥 Block from Node 1"
+    },
+    "previousHash": "f5d4b7ba260a6dbef84dedceae11577cd69ba7ee428d00432429bf0a1e075fd5",
+    "hash": "2f7c7776e32a3db30c797d597abb603eaf544a073ffa2738fb97b60cf4b91f65"
+  },
+  {
+    "index": 6,
+    "timestamp": "1752193367433",
+    "data": {
+      "message": "✅ Block from Node 2"
+    },
+    "previousHash": "2f7c7776e32a3db30c797d597abb603eaf544a073ffa2738fb97b60cf4b91f65",
+    "hash": "0b0351014fcc6081ad7ee6bb5ef4214a1fc341632d540b31803a6f61299c260b"
+  }
+]
