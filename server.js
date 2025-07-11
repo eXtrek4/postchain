@@ -1,5 +1,5 @@
 const express = require('express');
-const cors = require('cors'); // ✅ CORS support
+const cors = require('cors');
 const fs = require('fs');
 const { Block, Blockchain } = require('./blockchain');
 const P2PServer = require('./p2p');
@@ -7,7 +7,7 @@ const { sign, getPublicKey } = require('./wallet');
 const { credit, getBalance } = require('./token');
 
 const app = express();
-app.use(cors()); // ✅ Allow cross-origin
+app.use(cors());
 app.use(express.json());
 
 const HTTP_PORT = process.env.HTTP_PORT || 3000;
@@ -17,7 +17,7 @@ const myChain = new Blockchain();
 const p2pServer = new P2PServer(myChain);
 p2pServer.listen();
 
-// ✅ Load blockchain from disk if exists
+// 🔄 Load blockchain from disk
 if (fs.existsSync(DB_FILE)) {
     const saved = fs.readFileSync(DB_FILE);
     myChain.chain = JSON.parse(saved);
@@ -26,12 +26,12 @@ if (fs.existsSync(DB_FILE)) {
     console.log("📦 New blockchain created");
 }
 
-// 🔗 GET /blocks — list all blocks
+// 🔗 List all blocks
 app.get('/blocks', (req, res) => {
     res.json(myChain.chain);
 });
 
-// 📬 GET /posts — return all posts from blockchain
+// 📬 Get all posts from blockchain
 app.get('/posts', (req, res) => {
     const posts = myChain.chain
         .filter(block => block.data && block.data.message)
@@ -44,38 +44,52 @@ app.get('/posts', (req, res) => {
     res.json(posts);
 });
 
-// ⛏️ POST /mine — mine a new block and reward 10 POS
+// 🧱 Create new post (used by frontend)
+app.post('/newPost', (req, res) => {
+    const { message, signature, from } = req.body;
+
+    if (!message || !signature || !from) {
+        return res.status(400).json({ error: "Missing message, signature, or from" });
+    }
+
+    const newIndex = myChain.chain.length;
+    const newBlock = new Block(newIndex, Date.now().toString(), { message, from, signature });
+
+    myChain.addBlock(newBlock);
+    credit(from, 10); // reward POS
+    fs.writeFileSync(DB_FILE, JSON.stringify(myChain.chain, null, 2));
+    p2pServer.broadcastBlock(newBlock);
+
+    console.log(`📝 New post added and mined: #${newBlock.index} - ${message}`);
+    res.json(newBlock);
+});
+
+// ⛏️ Optional: raw mine endpoint
 app.post('/mine', (req, res) => {
     const message = req.body.message || 'No message';
     const signature = sign(message);
     const from = getPublicKey();
 
-    const blockData = { message, from, signature };
     const newIndex = myChain.chain.length;
-    const newBlock = new Block(newIndex, Date.now().toString(), blockData);
+    const newBlock = new Block(newIndex, Date.now().toString(), { message, from, signature });
 
     myChain.addBlock(newBlock);
-
-    // 💰 Reward the miner
     credit(from, 10);
-
-    // 💾 Save to disk
     fs.writeFileSync(DB_FILE, JSON.stringify(myChain.chain, null, 2));
     p2pServer.broadcastBlock(newBlock);
 
-    console.log(`⛏️  New block mined: #${newBlock.index} with hash ${newBlock.hash}`);
+    console.log(`⛏️  Mined: #${newBlock.index}`);
     res.json(newBlock);
 });
 
-// 📊 GET /balance/:pubKey — return POS balance for a wallet
+// 💰 Get balance by public key
 app.get('/balance/:pubKey', (req, res) => {
     const pubKey = req.params.pubKey;
     const balance = getBalance(pubKey);
     res.json({ balance: balance.toString() });
 });
 
-// 🚀 Start HTTP server
+// 🚀 Start server
 app.listen(HTTP_PORT, () => {
     console.log(`🚀 Server running at http://localhost:${HTTP_PORT}`);
 });
-
