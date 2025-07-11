@@ -1,13 +1,13 @@
 const express = require('express');
-const cors = require('cors'); // ✅ ADD THIS
+const cors = require('cors'); // ✅ CORS support
 const fs = require('fs');
 const { Block, Blockchain } = require('./blockchain');
 const P2PServer = require('./p2p');
 const { sign, getPublicKey } = require('./wallet');
-const { credit, getBalance } = require('./token'); // ✅ Import getBalance for /balance route
+const { credit, getBalance } = require('./token');
 
 const app = express();
-app.use(cors()); // ✅ ALLOW CROSS-ORIGIN REQUESTS
+app.use(cors()); // ✅ Allow cross-origin
 app.use(express.json());
 
 const HTTP_PORT = process.env.HTTP_PORT || 3000;
@@ -31,6 +31,19 @@ app.get('/blocks', (req, res) => {
     res.json(myChain.chain);
 });
 
+// 📬 GET /posts — return all posts from blockchain
+app.get('/posts', (req, res) => {
+    const posts = myChain.chain
+        .filter(block => block.data && block.data.message)
+        .map(block => ({
+            message: block.data.message,
+            from: block.data.from,
+            timestamp: block.timestamp,
+            hash: block.hash
+        }));
+    res.json(posts);
+});
+
 // ⛏️ POST /mine — mine a new block and reward 10 POS
 app.post('/mine', (req, res) => {
     const message = req.body.message || 'No message';
@@ -43,8 +56,8 @@ app.post('/mine', (req, res) => {
 
     myChain.addBlock(newBlock);
 
-    // 💰 Reward the miner's wallet
-    credit(from, 10); // Reward 10 POS to miner only
+    // 💰 Reward the miner
+    credit(from, 10);
 
     // 💾 Save to disk
     fs.writeFileSync(DB_FILE, JSON.stringify(myChain.chain, null, 2));
@@ -58,7 +71,7 @@ app.post('/mine', (req, res) => {
 app.get('/balance/:pubKey', (req, res) => {
     const pubKey = req.params.pubKey;
     const balance = getBalance(pubKey);
-    res.json({ balance: balance.toString() }); // still in wei-like format
+    res.json({ balance: balance.toString() });
 });
 
 // 🚀 Start HTTP server
