@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors'); // ✅ ADD THIS
 const fs = require('fs');
 const { Block, Blockchain } = require('./blockchain');
 const P2PServer = require('./p2p');
@@ -6,6 +7,7 @@ const { sign, getPublicKey } = require('./wallet');
 const { credit, getBalance } = require('./token'); // ✅ Import getBalance for /balance route
 
 const app = express();
+app.use(cors()); // ✅ ALLOW CROSS-ORIGIN REQUESTS
 app.use(express.json());
 
 const HTTP_PORT = process.env.HTTP_PORT || 3000;
