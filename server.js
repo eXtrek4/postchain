@@ -27,6 +27,9 @@ if (fs.existsSync(DB_FILE)) {
     console.log("📦 New blockchain created");
 }
 
+// 🪪 Display node's wallet address (public key)
+console.log("🪪 This node's public key:\n" + getPublicKey());
+
 // 📦 Get entire blockchain
 app.get('/blocks', (req, res) => {
     res.json(blockchain.chain);
