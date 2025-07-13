@@ -4,7 +4,7 @@ const fs = require('fs');
 const http = require('http');
 
 const { Block, Blockchain } = require('./blockchain');
-const { sign, getPublicKey } = require('./wallet');
+const { generateKeys, sign, getPublicKey } = require('./wallet');
 const { credit, getBalance } = require('./token');
 const P2PServer = require('./p2p');
 
@@ -15,10 +15,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// 🔐 Ensure wallet is created for this node
+generateKeys();
+
+// 🌐 Setup blockchain and P2P network
 const blockchain = new Blockchain();
 const p2p = new P2PServer(blockchain);
 
-// ✅ Load blockchain from disk
+// 📥 Load blockchain from disk
 if (fs.existsSync(DB_FILE)) {
     const saved = fs.readFileSync(DB_FILE);
     blockchain.chain = JSON.parse(saved);
@@ -27,7 +31,7 @@ if (fs.existsSync(DB_FILE)) {
     console.log("📦 New blockchain created");
 }
 
-// 🪪 Display node's wallet address (public key)
+// 🪪 Show node's wallet address
 console.log("🪪 This node's public key:\n" + getPublicKey());
 
 // 📦 Get entire blockchain
