@@ -6,7 +6,7 @@ const http = require('http');
 const { Block, Blockchain } = require('./blockchain');
 const { sign, getPublicKey } = require('./wallet');
 const { credit, getBalance } = require('./token');
-const P2PServer = require('./p2p'); // ✅ Use external P2P module
+const P2PServer = require('./p2p');
 
 const HTTP_PORT = process.env.HTTP_PORT || 3000;
 const DB_FILE = `blockchain-${HTTP_PORT}.json`;
@@ -27,7 +27,7 @@ if (fs.existsSync(DB_FILE)) {
     console.log("📦 New blockchain created");
 }
 
-// 🔗 API Endpoints
+// 🔗 Existing endpoints
 app.get('/blocks', (req, res) => {
     res.json(blockchain.chain);
 });
@@ -61,8 +61,7 @@ app.post('/newPost', (req, res) => {
 
     credit(from, 10);
     fs.writeFileSync(DB_FILE, JSON.stringify(blockchain.chain, null, 2));
-
-    p2p.broadcastBlock(newBlock); // ✅ Inform all peers
+    p2p.broadcastBlock(newBlock);
 
     console.log(`✅ New post: #${newBlock.index} from ${from}`);
     res.status(201).json({
@@ -73,15 +72,31 @@ app.post('/newPost', (req, res) => {
     });
 });
 
-app.get('/balance/:pubKey', (req, res) => {
-    const pubKey = req.params.pubKey;
-    const balance = getBalance(pubKey);
-    res.json({ balance: balance.toString() });
+// ✅ New mining endpoint (just adds a block with dummy data)
+app.post('/mine', (req, res) => {
+    const data = req.body.data || "⛏️ Block mined from /mine API";
+    const lastBlock = blockchain.getLatestBlock();
+
+    const newBlock = new Block(
+        lastBlock.index + 1,
+        Date.now().toString(),
+        data,
+        lastBlock.hash
+    );
+
+    const added = blockchain.addBlock(newBlock);
+    if (!added) return res.status(500).json({ error: "Block rejected" });
+
+    fs.writeFileSync(DB_FILE, JSON.stringify(blockchain.chain, null, 2));
+    p2p.broadcastBlock(newBlock);
+
+    console.log(`⛏️ Mined new block #${newBlock.index} via /mine`);
+    res.json({ message: "Block mined and broadcast", block: newBlock });
 });
 
 // 🌐 Start HTTP and P2P server
 const server = http.createServer(app);
 server.listen(HTTP_PORT, () => {
     console.log(`🚀 HTTP API running at http://localhost:${HTTP_PORT}`);
-    p2p.listen(); // ✅ Launch P2P server
+    p2p.listen();
 });
