@@ -27,11 +27,12 @@ if (fs.existsSync(DB_FILE)) {
     console.log("📦 New blockchain created");
 }
 
-// 🔗 Existing endpoints
+// 🔗 Get full blockchain
 app.get('/blocks', (req, res) => {
     res.json(blockchain.chain);
 });
 
+// 📝 Get all posts (blocks with messages)
 app.get('/posts', (req, res) => {
     const posts = blockchain.chain
         .filter(block => block.data?.message)
@@ -44,20 +45,22 @@ app.get('/posts', (req, res) => {
     res.json(posts);
 });
 
+// 🧾 Create a new signed post
 app.post('/newPost', (req, res) => {
     const { message } = req.body;
     if (!message || typeof message !== 'string') {
         return res.status(400).json({ error: "Message is required" });
     }
 
-    const signature = sign(message);
     const from = getPublicKey();
-
+    const signature = sign(message);
     const newIndex = blockchain.chain.length;
     const newBlock = new Block(newIndex, Date.now().toString(), { message, from, signature });
 
     const added = blockchain.addBlock(newBlock);
-    if (!added) return res.status(500).json({ error: "Failed to add block" });
+    if (!added) {
+        return res.status(500).json({ error: "Failed to add block" });
+    }
 
     credit(from, 10);
     fs.writeFileSync(DB_FILE, JSON.stringify(blockchain.chain, null, 2));
@@ -72,7 +75,7 @@ app.post('/newPost', (req, res) => {
     });
 });
 
-// ✅ New mining endpoint (just adds a block with dummy data)
+// ⛏️ Manually mine a block with any data
 app.post('/mine', (req, res) => {
     const data = req.body.data || "⛏️ Block mined from /mine API";
     const lastBlock = blockchain.getLatestBlock();
@@ -85,7 +88,9 @@ app.post('/mine', (req, res) => {
     );
 
     const added = blockchain.addBlock(newBlock);
-    if (!added) return res.status(500).json({ error: "Block rejected" });
+    if (!added) {
+        return res.status(500).json({ error: "Block rejected" });
+    }
 
     fs.writeFileSync(DB_FILE, JSON.stringify(blockchain.chain, null, 2));
     p2p.broadcastBlock(newBlock);
@@ -94,7 +99,14 @@ app.post('/mine', (req, res) => {
     res.json({ message: "Block mined and broadcast", block: newBlock });
 });
 
-// 🌐 Start HTTP and P2P server
+// 💰 Check token balance for a given public key
+app.get('/balance/:pubKey', (req, res) => {
+    const pubKey = req.params.pubKey;
+    const balance = getBalance(pubKey);
+    res.json({ balance: balance.toString() });
+});
+
+// 🌐 Start HTTP and P2P servers
 const server = http.createServer(app);
 server.listen(HTTP_PORT, () => {
     console.log(`🚀 HTTP API running at http://localhost:${HTTP_PORT}`);
